@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -32,27 +33,35 @@ fun StandardScaffold(
     navController: NavController,
     content: @Composable (PaddingValues) -> Unit,
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination: NavDestination? = navBackStackEntry?.destination
+
+    val showBottomNav = topLevelRoutes.map { it.route::class }.any { route ->
+        currentDestination?.hierarchy?.any { it.hasRoute(route) } == true
+    }
+
+
     Scaffold(
         bottomBar = {
-            NavigationBar {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-                topLevelRoutes.forEach { topLevelRoute ->
-                    NavigationBarItem(
-                        icon = { Icon(topLevelRoute.icon, contentDescription = topLevelRoute.name) },
-                        label = { Text(topLevelRoute.name) },
-                        selected = currentDestination?.hierarchy?.any { it.hasRoute(topLevelRoute.route::class) } == true,
-                        onClick = {
-                            navController.navigate(topLevelRoute.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+            if (showBottomNav){
+                NavigationBar {
+                    topLevelRoutes.forEach { topLevelRoute ->
+                        NavigationBarItem(
+                            icon = { Icon(topLevelRoute.icon, contentDescription = topLevelRoute.name) },
+                            label = { Text(topLevelRoute.name) },
+                            selected = currentDestination?.hierarchy?.any { it.hasRoute(topLevelRoute.route::class) } == true,
+                            onClick = {
+                                navController.navigate(topLevelRoute.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    // Restore state when reselecting a previously selected item
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                // Restore state when reselecting a previously selected item
-                                restoreState = true
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

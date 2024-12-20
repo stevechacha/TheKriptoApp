@@ -52,9 +52,7 @@ fun ExchangeScreen(
                 items(uiState.exchanges) { exchange ->
                     ExchangeListItem(
                         exchange = exchange,
-                        onClick = {
-                            exchange.id?.let { onNavigateToExchangeDetail(it) }
-                        }
+                        onClick = onNavigateToExchangeDetail
                     )
                 }
             }
@@ -69,13 +67,13 @@ fun ExchangeScreen(
 @Composable
 fun ExchangeListItem(
     exchange: Exchanges,
-    onClick: () -> Unit
+    onClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clickable { onClick() },
+            .clickable { exchange.id?.let { onClick(it) } },
     ) {
         Row(
             modifier = Modifier
@@ -83,6 +81,7 @@ fun ExchangeListItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Placeholder for Exchange Logo
             Box(
                 modifier = Modifier
                     .size(48.dp)
@@ -110,3 +109,4 @@ fun ExchangeListItem(
         }
     }
 }
+

@@ -5,11 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.chachadev.appthe.core.data.network.dto.CoinDTO
-import com.chachadev.appthe.core.data.network.dto.CoinDetailsDTO
-import com.chachadev.appthe.core.data.network.dto.ExchangesDetailsDTO
-import com.chachadev.appthe.core.domain.model.Coin
-import com.chachadev.appthe.core.domain.model.CoinDetails
 import com.chachadev.appthe.presentation.screen.coin.CoinListScreen
 import com.chachadev.appthe.presentation.screen.coinDetails.CoinDetailScreen
 import com.chachadev.appthe.presentation.screen.exchange.ExchangeScreen
@@ -25,6 +20,7 @@ object ExchangeList
 
 @Serializable
 data class CoinDetailRoute(val id: String)
+
 @Serializable
 data class ExchangeDetailsRoute(val id: String)
 
@@ -42,12 +38,11 @@ fun AppNavigation(
         }
 
         composable<CoinDetailRoute> { backStackEntry ->
-            val coinDetail: CoinDTO = backStackEntry.toRoute()
-            coinDetail.id?.let {
-                CoinDetailScreen(
-                    id = it,
-                )
-            }
+            val coinDetail: CoinDetailRoute = backStackEntry.toRoute<CoinDetailRoute>()
+            CoinDetailScreen(
+                id = coinDetail.id,
+                navigateBack = { navController.popBackStack()}
+            )
         }
 
         composable<ExchangeList> {
@@ -59,8 +54,11 @@ fun AppNavigation(
         }
 
         composable<ExchangeDetailsRoute> { backStackEntry ->
-            val exchangeDetails: ExchangesDetailsDTO = backStackEntry.toRoute()
-            ExchangeDetailScreen(id =exchangeDetails.id)
+            val exchangeDetails: ExchangeDetailsRoute = backStackEntry.toRoute<ExchangeDetailsRoute>()
+            ExchangeDetailScreen(
+                id =exchangeDetails.id,
+                navigateBack = { navController.popBackStack()}
+            )
         }
 
     }
