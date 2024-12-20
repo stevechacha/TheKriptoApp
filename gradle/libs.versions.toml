@@ -122,6 +122,7 @@ javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInjec
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 retrofit-kotlin-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
+retrofit-moshi-converter = { module = "com.squareup.retrofit2:converter-moshi",version.ref ="retrofit"}
 retrofit-moshi = {module = "com.squareup.moshi:moshi-kotlin",version.ref = "moshi"}
 retrofit-adapters  = { module = "com.squareup.moshi:moshi-adapters",version.ref = "moshi"}
 retrofit-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen",version.ref = "moshi"}
@@ -151,7 +152,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 [bundles]
 compose = ["compose-navigation","androidx-compose-material-icons","androidx-constraintlayout-compose","androidx-core-splashscreen"]
 lifecycle = ["androidx-lifecycle-runtime-ktx","androidx-lifecycle-runtimeCompose","androidx-lifecycle-viewModelCompose"]
-retrofit = ["retrofit","retrofit-adapters","retrofit-gson-converter","retrofit-kotlin-serialization","retrofit-moshi","retrofit-moshi-codegen"]
+retrofit = ["retrofit","retrofit-adapters","retrofit-moshi-converter","retrofit-gson-converter","retrofit-kotlin-serialization","retrofit-moshi","retrofit-moshi-codegen"]
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

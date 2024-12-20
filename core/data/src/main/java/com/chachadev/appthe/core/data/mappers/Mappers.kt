@@ -3,16 +3,16 @@ package com.chachadev.appthe.core.data.mappers
 import com.chachadev.appthe.core.data.network.dto.CoinDTO
 import com.chachadev.appthe.core.data.network.dto.CoinDetailsDTO
 import com.chachadev.appthe.core.data.network.dto.CoinDetailsLinksDTO
+import com.chachadev.appthe.core.data.network.dto.CoinTagDTO
 import com.chachadev.appthe.core.data.network.dto.ContractDTO
 import com.chachadev.appthe.core.data.network.dto.ExchangeDTOLinks
-import com.chachadev.appthe.core.data.network.dto.ExchangeDetailsDTO
+import com.chachadev.appthe.core.data.network.dto.ExchangesDetailsDTO
 import com.chachadev.appthe.core.data.network.dto.ExchangesDTO
 import com.chachadev.appthe.core.data.network.dto.FiatDTO
 import com.chachadev.appthe.core.data.network.dto.LinksExtendedDTO
 import com.chachadev.appthe.core.data.network.dto.ParentDTO
-import com.chachadev.appthe.core.data.network.dto.QuotesKeyDTO
+import com.chachadev.appthe.core.data.network.dto.QuoteDetailsDTO
 import com.chachadev.appthe.core.data.network.dto.StatsDTO
-import com.chachadev.appthe.core.data.network.dto.TagDTO
 import com.chachadev.appthe.core.data.network.dto.TeamDTO
 import com.chachadev.appthe.core.data.network.dto.WhitePaperDTO
 import com.chachadev.appthe.core.domain.model.Coin
@@ -25,7 +25,7 @@ import com.chachadev.appthe.core.domain.model.Fiat
 import com.chachadev.appthe.core.domain.model.Links
 import com.chachadev.appthe.core.domain.model.LinksExtended
 import com.chachadev.appthe.core.domain.model.Parent
-import com.chachadev.appthe.core.domain.model.QuotesKey
+import com.chachadev.appthe.core.domain.model.QuoteDetails
 import com.chachadev.appthe.core.domain.model.Stats
 import com.chachadev.appthe.core.domain.model.Tag
 import com.chachadev.appthe.core.domain.model.Team
@@ -50,24 +50,27 @@ fun CoinDetailsDTO.toCoinDetailDomain() = CoinDetails(
     isActive = isActive,
     isNew = isNew,
     links = links?.toLinks(),
-    linksExtended = linksExtendedDto?.map { it.toLinksExtended() },
+    linksExtended = linksExtended?.map { it.toLinksExtended() },
     message = message,
     name = name,
     openSource = openSource,
     rank = rank,
     startedAt = startedAt,
     symbol = symbol,
-    tags = tagDTO?.map { it.toTag() },
-    team = team?.map { it.toTeam()},
+    tags = tags?.map { it.toTag() },
+    team = team?.map { it.toTeam() },
     type = type,
 )
+
+
+
 fun ExchangesDTO.toExchange() = Exchanges(
     active = active,
     adjustedRank = adjustedRank,
     apiStatus = apiStatus,
     currencies = currencies,
     description = description,
-    fiats = fiatDTO?.map { it.toFiat() },
+    fiats = fiats?.map { it.toFiat() },
     id = id,
     lastUpdated = lastUpdated,
     exchangeLinks = exchangeDTOLinks?.toExchangeLinks(),
@@ -75,14 +78,12 @@ fun ExchangesDTO.toExchange() = Exchanges(
     marketsDataFetched = marketsDataFetched,
     message = message,
     name = name,
-    quotesKey = quotesKeyDTO?.toQuoteKey(),
+    quotes = quotes.mapValues { it.value.toQuoteKey() },
     reportedRank = reportedRank,
-    websiteStatus = websiteStatus,
-    confidenceScore = confidenceScore,
-    sessionsPerMonth = sessionsPerMonth?.toInt()
+    websiteStatus = websiteStatus
 )
 
-fun ExchangeDetailsDTO.toExchangeDetail() = ExchangeDetails(
+fun ExchangesDetailsDTO.toExchangeDetail() = ExchangeDetails(
     id = id,
     name = name,
     description = description,
@@ -96,12 +97,11 @@ fun ExchangeDetailsDTO.toExchangeDetail() = ExchangeDetails(
     reportedRank = reportedRank,
     currencies = currencies,
     markets = markets,
-    fiats = fiats,
-    quotes = quotesKeyDTO.toQuoteKey(),
-    lastUpdated = lastUpdated,
-    imgRev = imgRev,
-    confidenceScore = confidenceScore
+    fiats = fiats.map { it.toFiat() },
+    quotes = quotes.mapValues { it.value.toQuoteKey() },
+    lastUpdated = lastUpdated
 )
+
 
 
 fun ExchangeDTOLinks.toExchangeLinks() = ExchangeLinks(
@@ -109,25 +109,29 @@ fun ExchangeDTOLinks.toExchangeLinks() = ExchangeLinks(
     website = twitter
 )
 
-fun QuotesKeyDTO.toQuoteKey() = QuotesKey(
-    adjustedVolume24h = adjustedVolume24h,
-    adjustedVolume30d = adjustedVolume30d,
-    adjustedVolume7d = adjustedVolume7d,
-    reportedVolume24h = reportedVolume24h,
-    reportedVolume30d = reportedVolume30d,
-    reportedVolume7d = reportedVolume7d
-)
+// Extension function to transform the quotes value into a QuoteDetails object
+fun QuoteDetailsDTO.toQuoteKey() = QuoteDetails(
+        reportedVolume24h = reportedVolume24h,
+        adjustedVolume24h = adjustedVolume24h,
+        reportedVolume7d = reportedVolume7d,
+        adjustedVolume7d = adjustedVolume7d,
+        reportedVolume30d = reportedVolume30d,
+        adjustedVolume30d = adjustedVolume30d
+    )
+
 
 fun FiatDTO.toFiat() = Fiat(
     name = name,
     symbol = symbol
 )
+
 fun ContractDTO.toContact() = ContractModel(
     contract = contract,
     platform = platform,
     type = type
 )
-fun TagDTO.toTag() = Tag(
+
+fun CoinTagDTO.toTag() = Tag(
     id = id,
     icoCounter = icoCounter,
     coinCounter = coinCounter,
@@ -142,7 +146,7 @@ fun TeamDTO.toTeam() = Team(
 
 fun WhitePaperDTO.toWhitePaper() = WhitePaper(
     link = link,
-    thumbnail  =thumbnail
+    thumbnail = thumbnail
 )
 
 fun CoinDetailsLinksDTO.toLinks() = Links(
@@ -161,7 +165,7 @@ fun ParentDTO.toParent() = Parent(
 )
 
 fun LinksExtendedDTO.toLinksExtended() = LinksExtended(
-    statsDTO = statsDTO?.toStats(),
+    statsDTO = stats?.toStats(),
     type = type,
     url = url
 )

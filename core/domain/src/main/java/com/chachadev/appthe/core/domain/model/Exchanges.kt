@@ -5,7 +5,6 @@ data class Exchanges(
     val active: Boolean?,
     val adjustedRank: Int?,
     val apiStatus: Boolean?,
-    val confidenceScore: Double?,
     val currencies: Int?,
     val description: String?,
     val fiats: List<Fiat>?,
@@ -14,11 +13,10 @@ data class Exchanges(
     val exchangeLinks: ExchangeLinks?,
     val markets: Int?,
     val marketsDataFetched: Boolean?,
-    val message: Any?,
+    val message: String?,
     val name: String?,
-    val quotesKey: QuotesKey?,
+    val quotes: Map<String, QuoteDetails>,
     val reportedRank: Int?,
-    val sessionsPerMonth: Int?,
     val websiteStatus: Boolean?
 
 )
@@ -33,11 +31,11 @@ data class Fiat(
     val symbol: String
 )
 
-data class QuotesKey(
-    val adjustedVolume24h: Int,
-    val adjustedVolume30d: Int,
-    val adjustedVolume7d: Int,
-    val reportedVolume24h: Int,
-    val reportedVolume30d: Int,
-    val reportedVolume7d: Int
+data class QuoteDetails(
+    val adjustedVolume24h: Long,
+    val adjustedVolume30d: Long,
+    val adjustedVolume7d: Long,
+    val reportedVolume24h: Long,
+    val reportedVolume30d: Long,
+    val reportedVolume7d: Long
 )
