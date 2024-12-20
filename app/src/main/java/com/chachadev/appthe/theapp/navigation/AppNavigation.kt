@@ -1,13 +1,14 @@
 package com.chachadev.appthe.theapp.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.chachadev.appthe.core.data.network.dto.CoinDTO
 import com.chachadev.appthe.core.data.network.dto.CoinDetailsDTO
-import com.chachadev.appthe.core.data.network.dto.ExchangeDetailsDTO
+import com.chachadev.appthe.core.data.network.dto.ExchangesDetailsDTO
+import com.chachadev.appthe.core.domain.model.Coin
 import com.chachadev.appthe.core.domain.model.CoinDetails
 import com.chachadev.appthe.presentation.screen.coin.CoinListScreen
 import com.chachadev.appthe.presentation.screen.coinDetails.CoinDetailScreen
@@ -41,8 +42,8 @@ fun AppNavigation(
         }
 
         composable<CoinDetailRoute> { backStackEntry ->
-            val coinDetail: CoinDetailsDTO = backStackEntry.toRoute()
-            coinDetail.name?.let {
+            val coinDetail: CoinDTO = backStackEntry.toRoute()
+            coinDetail.id?.let {
                 CoinDetailScreen(
                     id = it,
                 )
@@ -58,7 +59,7 @@ fun AppNavigation(
         }
 
         composable<ExchangeDetailsRoute> { backStackEntry ->
-            val exchangeDetails: ExchangeDetailsDTO = backStackEntry.toRoute()
+            val exchangeDetails: ExchangesDetailsDTO = backStackEntry.toRoute()
             ExchangeDetailScreen(id =exchangeDetails.id)
         }
 

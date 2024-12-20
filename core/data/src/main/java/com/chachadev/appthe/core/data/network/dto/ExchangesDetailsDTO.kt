@@ -4,15 +4,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ExchangesDTO(
+data class ExchangesDetailsDTO(
     val id: String,
     val name: String,
+    val description: String,
     val active: Boolean,
     @SerialName("website_status") val websiteStatus: Boolean,
     @SerialName("api_status") val apiStatus: Boolean,
-    val description: String,
     val message: String?,
-    @SerialName("links") val exchangeDTOLinks: ExchangeDTOLinks,
+    @SerialName("links") val exchangeDTOLinks: ExchangeDTOLinks?,
     @SerialName("markets_data_fetched") val marketsDataFetched: Boolean,
     @SerialName("adjusted_rank") val adjustedRank: Int,
     @SerialName("reported_rank") val reportedRank: Int,
@@ -23,11 +23,14 @@ data class ExchangesDTO(
     @SerialName("last_updated") val lastUpdated: String
 )
 
+
 @Serializable
-data class ExchangeDTOLinks(
-    val website: List<String>,
-    val twitter: List<String>?
+data class QuoteDetailsDTO(
+    @SerialName("reported_volume_24h") val reportedVolume24h: Long,
+    @SerialName("adjusted_volume_24h") val adjustedVolume24h: Long,
+    @SerialName("reported_volume_7d") val reportedVolume7d: Long,
+    @SerialName("adjusted_volume_7d") val adjustedVolume7d: Long,
+    @SerialName("reported_volume_30d") val reportedVolume30d: Long,
+    @SerialName("adjusted_volume_30d") val adjustedVolume30d: Long
 )
-
-
 

@@ -60,7 +60,7 @@ fun CoinListScreen(
                 itemsIndexed(uiState.coin) { index, coin ->
                     CoinComponent(
                         coin = coin,
-                        onClick = { onNavigateToCoinDetail.invoke(coin.id) }
+                        onClick = onNavigateToCoinDetail
                     )
                     if (index < uiState.coin.lastIndex) {
                         HorizontalDivider(
@@ -84,12 +84,12 @@ fun CoinListScreen(
 @Composable
 fun CoinComponent(
     coin: Coin,
-    onClick: (Coin) -> Unit
+    onClick: (String) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(coin) }
+            .clickable { onClick(coin.id) }
             .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically

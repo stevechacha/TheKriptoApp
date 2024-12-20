@@ -103,7 +103,7 @@ fun ExchangeListItem(
                     )
                 }
                 Text(
-                    text = "Volume: ${exchange.quotesKey?.adjustedVolume7d}",
+                    text = "Volume: ${exchange.quotes.values}",
                     color = Color.Gray
                 )
             }

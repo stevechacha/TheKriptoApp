@@ -1,7 +1,9 @@
 package com.chachadev.appthe.core.data.network.dto
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PeopleDTO(
     val description: String,
     val id: String,
@@ -12,6 +14,7 @@ data class PeopleDTO(
     val teamsCount: Int
 )
 
+@Serializable
 data class PositionDTO(
     @SerializedName("coin_id")
     val coinId: String,
@@ -20,6 +23,7 @@ data class PositionDTO(
     val position: String
 )
 
+@Serializable
 data class PeopleDTOLinks(
     val additionalDTO: List<AdditionalDTO>,
     val githubDTO: List<GithubDTO>,
@@ -28,32 +32,33 @@ data class PeopleDTOLinks(
     val twitterDTO: List<TwitterDTO>
 )
 
+@Serializable
 data class AdditionalDTO(
     val followers: Int,
     val url: String
 )
 
+@Serializable
 data class LinkedinDTO(
     val followers: Int,
     val url: String
 )
 
+@Serializable
 data class MediumDTO(
     val followers: Int,
     val url: String
 )
+
+@Serializable
 data class TwitterDTO(
     val followers: Int,
     val url: String
 )
 
+@Serializable
 data class GithubDTO(
     val followers: Int,
     val url: String
 )
 
-data class ParentDTO(
-    val id: String?,
-    val name: String?,
-    val symbol: String?
-)
