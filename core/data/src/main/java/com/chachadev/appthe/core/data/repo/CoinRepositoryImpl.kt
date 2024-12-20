@@ -57,9 +57,9 @@ class CoinRepositoryImpl @Inject constructor(
            Resource.Success<ExchangeDetails>(data = data)
 
        } catch (e: IOException){
-           Resource.Error<ExchangeDetails>(message = e.localizedMessage?:"")
+           Resource.Error<ExchangeDetails>(message = e.localizedMessage?: "Couldn't reach the server")
        } catch (e: HttpException){
-           Resource.Error<ExchangeDetails>(message = e.localizedMessage?:"")
+           Resource.Error<ExchangeDetails>(message = e.localizedMessage?: "An unexpected error occurred")
        }
     }
 

@@ -58,7 +58,9 @@ interface CoinApi {
     suspend fun getExchanges(): List<ExchangesDTO>
 
     @GET("exchanges/{exchange_id}")
-    suspend fun getExchangesDetail(@Path("exchange_id") exchangeId: String): ExchangesDetailsDTO
+    suspend fun getExchangesDetail(
+        @Path("exchange_id") exchangeId: String
+    ): ExchangesDetailsDTO
 
     @GET("exchanges/{exchange_id}/markets")
     suspend fun getExchangeMarkets(@Path("exchange_id") exchangeId : String): ExchangeMarketDTO

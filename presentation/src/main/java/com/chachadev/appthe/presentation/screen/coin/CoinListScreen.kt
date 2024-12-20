@@ -55,7 +55,8 @@ fun CoinListScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
-                verticalArrangement = Arrangement.spacedBy(8.dp) // Add spacing between items
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 itemsIndexed(uiState.coin) { index, coin ->
                     CoinComponent(
