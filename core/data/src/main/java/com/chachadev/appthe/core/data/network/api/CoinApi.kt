@@ -14,7 +14,6 @@ import com.chachadev.appthe.core.data.network.dto.SocialStatusDTO
 import com.chachadev.appthe.core.data.network.dto.GlobalMarketStatsDTO
 import com.chachadev.appthe.core.data.network.dto.TickerDetailsDTO
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -31,28 +30,40 @@ interface CoinApi {
 
 
     @GET("coins/{coin_id}/twitter")
-    suspend fun getTwitterTimeline(): SocialStatusDTO
+    suspend fun getSocialStatus(
+        @Path("coin_id") coinId: String
+    ): SocialStatusDTO
 
     @GET("coins/{coin_id}/events")
-    suspend fun getCoinEventsByCoinId(@Path("") coinId: String): EventDTO
+    suspend fun getCoinEventsByCoinId(
+        @Path("coin_id") coinId: String
+    ): EventDTO
 
     @GET("coins/{coin_id}/exchanges")
-    suspend fun getCoinIdById(@Path("coin_id") coinId: String): ExchangeCoinDTO
+    suspend fun getCoinIdExchanged(
+        @Path("coin_id") coinId: String
+    ): ExchangeCoinDTO
 
     @GET("coins/{coin_id}/markets")
-    suspend fun getCoinMarket(@Path("coin_id") coinId: String): ExchangeMarketDTO
+    suspend fun getCoinMarketExchange(
+        @Path("coin_id") coinId: String
+    ): ExchangeMarketDTO
 
     @GET("tags")
     suspend fun getTags():List<BlockchainServiceDTO>
 
     @GET("tags/{tag_id}")
-    suspend fun getTagDetails(@Path("tag_id") tagId: String): BlockchainServiceDTO
+    suspend fun getTagDetails(
+        @Path("tag_id") tagId: String
+    ): BlockchainServiceDTO
 
     @GET("tickers")
     suspend fun getCoinTickers(): List<CoinTickerDTO>
 
     @GET("tickers/{coin_id}")
-    suspend fun getTickersDetail(@Path("coin_id") coinId: String): TickerDetailsDTO
+    suspend fun getTickersDetail(
+        @Path("coin_id") coinId: String
+    ): TickerDetailsDTO
 
     @GET("exchanges")
     suspend fun getExchanges(): List<ExchangesDTO>
@@ -63,8 +74,11 @@ interface CoinApi {
     ): ExchangesDetailsDTO
 
     @GET("exchanges/{exchange_id}/markets")
-    suspend fun getExchangeMarkets(@Path("exchange_id") exchangeId : String): ExchangeMarketDTO
+    suspend fun getExchangeMarkets(
+        @Path("exchange_id") exchangeId : String
+    ): ExchangeMarketDTO
 
+    @GET("price-converter")
     suspend fun getPriceConvert(
         @Query("base_currency_id") baseCurrencyId: String,
         @Query("quote_currency_id") quoteCurrencyId: String,

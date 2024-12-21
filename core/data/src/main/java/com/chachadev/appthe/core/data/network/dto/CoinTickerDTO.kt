@@ -15,7 +15,7 @@ data class CoinTickerDTO(
     @SerialName("beta_value") val betaValue: Double,
     @SerialName("first_data_at") val firstDataAt: String,
     @SerialName("last_updated") val lastUpdated: String,
-    val quotes: Map<String, QuoteDTO>
+    val quotes:  QuoteDTO
 )
 
 @Serializable

@@ -2,6 +2,7 @@ package com.chachadev.appthe.theapp.bottomNav
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material.icons.filled.Earbuds
 import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material3.Icon
@@ -18,14 +19,16 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.chachadev.appthe.theapp.navigation.CoinList
-import com.chachadev.appthe.theapp.navigation.ExchangeList
+import com.chachadev.appthe.theapp.navigation.CoinListRoute
+import com.chachadev.appthe.theapp.navigation.CurrencyExchangeRoute
+import com.chachadev.appthe.theapp.navigation.ExchangeListRoute
 
 data class TopLevelRoute<T : Any>(val name: String, val route: T, val icon: ImageVector)
 
 val topLevelRoutes = listOf(
-    TopLevelRoute("Coins", CoinList, Icons.Default.HourglassEmpty),
-    TopLevelRoute("Exchange", ExchangeList, Icons.Default.Earbuds)
+    TopLevelRoute("Coins", CoinListRoute, Icons.Default.HourglassEmpty),
+    TopLevelRoute("Exchange", ExchangeListRoute, Icons.Default.Earbuds),
+    TopLevelRoute("Currency", CurrencyExchangeRoute, Icons.Default.CurrencyExchange)
 )
 
 @Composable

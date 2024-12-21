@@ -15,7 +15,7 @@ data class Exchanges(
     val marketsDataFetched: Boolean?,
     val message: String?,
     val name: String?,
-    val quotes: Map<String, QuoteDetails>,
+    val quotes: QuoteDetails?,
     val reportedRank: Int?,
     val websiteStatus: Boolean?
 

@@ -32,7 +32,8 @@ fun CoinDetailScreen(
         topBar = {
             AppTopBar(
                 title = "CoinDetails",
-                navigateBack = navigateBack
+                navigateBack = navigateBack,
+                showNavigationBar = true
             )
         }
     ) {  paddingValues ->

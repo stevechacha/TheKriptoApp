@@ -15,21 +15,24 @@ import androidx.compose.ui.Modifier
 @Composable
 fun AppTopBar(
     modifier: Modifier = Modifier,
+    showNavigationBar: Boolean = false,
     navigateBack:()->Unit = {},
     title: String  =  ""
 ) {
     TopAppBar(
         title = { Text(text = title) },
         navigationIcon = {
-            IconButton(
-                onClick = navigateBack
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    tint = MaterialTheme.colorScheme.onBackground,
-                    contentDescription = title,
-                    modifier = modifier
-                )
+            if (showNavigationBar){
+                IconButton(
+                    onClick = navigateBack
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        contentDescription = title,
+                        modifier = modifier
+                    )
+                }
             }
         },
         actions = {}

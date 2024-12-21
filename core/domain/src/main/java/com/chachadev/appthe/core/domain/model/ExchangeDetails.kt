@@ -14,7 +14,7 @@ data class ExchangeDetails(
     val reportedRank: Int,
     val currencies: Int,
     val markets: Int,
-    val fiats: List<Fiat?>,
-    val quotes: Map<String, QuoteDetails>,
+    val fiats: List<Any?>,
+    val quotes: QuoteDetails?,
     val lastUpdated: String,
 )
