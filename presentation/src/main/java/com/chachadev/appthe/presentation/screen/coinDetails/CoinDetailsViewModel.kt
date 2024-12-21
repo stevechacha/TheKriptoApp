@@ -10,10 +10,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class CoinDetailsViewModel @Inject constructor(private val getCoinDetailsUseCase: GetCoinDetailsUseCase): ViewModel() {
+class CoinDetailsViewModel @Inject constructor(
+    private val getCoinDetailsUseCase: GetCoinDetailsUseCase
+): ViewModel() {
     private val _state = MutableStateFlow(CoinDetailsUiState())
     val state: StateFlow<CoinDetailsUiState> = _state.asStateFlow()
 
@@ -21,32 +24,12 @@ class CoinDetailsViewModel @Inject constructor(private val getCoinDetailsUseCase
     fun getCoinDetails(coinId: String) {
         getCoinDetailsUseCase(coinId).onEach { result ->
             when (result) {
-                is Resource.Success -> {
-                    val coinDetails = result.data
-                    _state.value =
-                        CoinDetailsUiState(coinDetails = coinDetails, isLoading = false)
-                }
-
-                is Resource.Loading -> {
-                    _state.value = CoinDetailsUiState(isLoading = true)
-                }
-
-                is Resource.Error -> {
-                    _state.value =
-                        CoinDetailsUiState(errorMessage = result.message!!, isLoading = false)
-                }
+                is Resource.Success -> {_state.update { it.copy(isLoading = false,coinDetails = result.data) }}
+                is Resource.Loading -> { _state.update { it.copy(isLoading = true) } }
+                is Resource.Error -> { _state.update { it.copy(isLoading = false, errorMessage = result.message!!) } }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun onGetCoinDetailsEvent(coinId: String) {
-        getCoinDetailsUseCase(coinId).onEach { result ->
-            _state.value = when (result) {
-                is Resource.Loading -> CoinDetailsUiState(isLoading = true)
-                is Resource.Success -> CoinDetailsUiState(coinDetails = result.data)
-                is Resource.Error -> CoinDetailsUiState(errorMessage = result.message!!)
-            }
-        }.launchIn(viewModelScope)
-    }
 
 }

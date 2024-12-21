@@ -3,6 +3,7 @@ package com.chachadev.appthe.theapp.di
 import com.chachadev.appthe.core.domain.repo.CoinRepository
 import com.chachadev.appthe.core.domain.useCase.GetCoinDetailsUseCase
 import com.chachadev.appthe.core.domain.useCase.GetCoinsUseCase
+import com.chachadev.appthe.core.domain.useCase.GetCurrencyExchangeUseCase
 import com.chachadev.appthe.core.domain.useCase.GetExchangeDetailsUseCase
 import com.chachadev.appthe.core.domain.useCase.GetExchangeUseCase
 import dagger.Module
@@ -23,7 +24,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesCoinDetails(repository: CoinRepository): GetCoinDetailsUseCase {
+    fun providesCoinDetailsUseCase(repository: CoinRepository): GetCoinDetailsUseCase {
         return GetCoinDetailsUseCase(repository)
     }
 
@@ -35,7 +36,13 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideExchangeDetails(coinRepository: CoinRepository): GetExchangeDetailsUseCase {
+    fun getExchangeDetailsUseCase(coinRepository: CoinRepository): GetExchangeDetailsUseCase {
         return GetExchangeDetailsUseCase(coinRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCurrencyExchangeUseCase(coinRepository: CoinRepository): GetCurrencyExchangeUseCase{
+        return GetCurrencyExchangeUseCase(coinRepository)
     }
 }

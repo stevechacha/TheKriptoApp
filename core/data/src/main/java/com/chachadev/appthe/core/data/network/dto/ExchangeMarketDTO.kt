@@ -17,7 +17,7 @@ data class ExchangeMarketDTO(
     @SerialName("fee_type") val feeType: String,
     @SerialName("outlier") val outlier: Boolean,
     @SerialName("adjusted_volume_24h_share") val adjustedVolume24hShare: Double,
-    val quotes: Map<String, ExchangeMarketQuoteDTO>,
+    val quotes: ExchangeMarketQuoteDTO,
     @SerialName("last_updated") val lastUpdated: String
 )
 
